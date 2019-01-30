@@ -1,0 +1,33 @@
+{
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "eject": "expo eject",
+    "setup": "node --max-old-space-size=8192 node_modules/expo/AppEntry.js"
+  },
+  "dependencies": {
+    "@types/react-native-modalbox": "^1.4.7",
+    "expo": "^32.0.0",
+    "expokit": "32.0.5",
+    "global": "^4.3.2",
+    "increase-memory-limit": "^1.0.6",
+    "react": "16.5.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-native-button": "^2.0.0",
+    "react-native-elements": "^1.0.0",
+    "react-native-modalbox": "^1.7.1",
+    "react-native-vector-icons": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.13",
+    "@types/react": "^16.7.21",
+    "@types/react-native": "^0.57.32",
+    "@types/react-test-renderer": "^16.0.3",
+    "babel-preset-expo": "^5.0.0",
+    "react-native-typescript-transformer": "^1.2.11",
+    "typescript": "^3.2.4"
+  },
+  "private": true
+}
