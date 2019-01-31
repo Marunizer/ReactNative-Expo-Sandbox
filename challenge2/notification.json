@@ -1,0 +1,15 @@
+{
+    "notification": {
+    "type": "string",
+    "id": "string",
+    "content": {
+      "title": "string",
+      "body": "string",
+      "icon": "string",
+      "sound": "string"
+    },
+    "route": "string",
+    "route_data": "string",
+    "created": "string"
+  }
+}

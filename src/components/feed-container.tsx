@@ -63,7 +63,7 @@ export default class FeedContainerComponent extends React.Component<Props, State
       .catch(error => {
         this.setState({ error, loading: false });
       });
-    }, 1000);//For Dramatic effect
+    }, 500);//For Dramatic effect
 
   }
 
@@ -77,8 +77,6 @@ export default class FeedContainerComponent extends React.Component<Props, State
   };
 
   handleLoadMore = () => {
-    console.log('attempting to load more');
-
     this.setState(
       { loading: true },
       () => {this.fetchMorePosts();}
@@ -159,7 +157,7 @@ export default class FeedContainerComponent extends React.Component<Props, State
               refreshing={this.state.refreshing}
               onRefresh={this.handleRefresh}
               onEndReached={ this.handleLoadMore}
-              onEndReachedThreshold={0.1}
+              onEndReachedThreshold={0.5}
           />
         </View>
       </View>

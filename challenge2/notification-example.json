@@ -1,0 +1,14 @@
+{"notification": {
+    "type": "Account | Thread | Collection | Notes | Notifications | Show Thread",
+    "id": "erwgbei499hfh43fp92hf",
+    "content": {
+      "title": "{Username from causer} | ",
+      "body": "good old message",
+      "icon": "url./",
+      "sound": "ding, swoosh, click-clack"
+    },
+    "route": "/route/data | entity id",
+    "route_data": "card 35",
+    "created": "2019-01-08T01:01:18.733Z"
+  }
+}

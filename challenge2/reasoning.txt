@@ -1,0 +1,72 @@
+{
+    "notification": {
+    "type": "string",
+    "id": "string",
+    "content": {
+      "title": "string",
+      "body": "string",
+      "icon": "string",
+      "sound": "string"
+    },
+    "route": "string",
+    "route_data": "string",
+    "created": "string"
+  }
+}
+
+type: to identify notifcation time of where to navigate
+
+
+id: id for notification message.
+
+
+content : holds the fields we care about for actually rendering the notification.
+
+
+title: the simple main label for the notification. Could be an action, an account username, or 
+        examples:
+             " {username} has just subscribed!" , "{username}" shared this thread... 
+             "{username} commented on ...", "{username subscribed to} has made a new note/thread"
+
+             simpler: "New Subscriber", "{username}" in this case, the username is enough, and the action text could be in the body
+
+
+body[]: usually a sneak peak at the content written, or an action performed if the title is simple. 
+        on a comment , it will show the text from the comment.
+
+
+icon: could be either a string identifying if you want to display an icon representing a new message/comment/etc..
+      could also refer to a url to grab the icon picture from a user that made an action notifying your account
+
+
+sound: a little extra, if we want different sounds for different notifications this could be useful,
+       I would assume the audio files for the sounds would be packaged with the app but if instead they were in the cloud, a user 
+       could get the updated notification sound without updating the app.
+
+
+route: where to navigate the apps View or Screen to.
+
+route_data: for cases such as sharing a specific card in a thread
+            if users can have up to 36 cards or more on a thread, 
+            sharing a specific card may defz be wanted so user is 
+            not expected to swipe through them all
+            - also a generic string so could provide a different feature depending on screen routing to
+
+
+createdAt: stole this from the example given, generally a good idea to keep track of metadata like this, but also important information
+           for the user to know WHEN the notification took place.
+
+
+causer[]: from the "Things to consider" section. I did not include information for a user that could be responsible for a notification.
+        It seems like information related to the user that the app cares to display would already be displayed in title/body/icon. 
+        However, in the case where we have a feed of notifications, it would be good to include data from the 'causer' like a route
+        to their account so they can just tap the name of the 'causer' and be routed towards their profile page.
+
+        would be something like:
+                                 causer {
+                                            username: string
+                                            Id: string,
+                                            route: string,
+                                            profileImageUrl: string(url),
+                                        }
+

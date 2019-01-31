@@ -1,0 +1,71 @@
+ const handleNotification = (notification: Notification) => {
+
+    switch (notification.type) {
+
+      case "Account": {
+          renderNotification(notification.content)
+          push(notification.route)
+          break;
+      }
+      case "Thread": {
+        renderNotification(notification.content)
+        push(notification.route, notification.route_data)
+        break;
+      }
+      case "Collection": {
+        renderNotification(notification.content)
+        push(notification.route)
+        break;
+      }
+      case "Notes": {
+        renderNotification(notification.content)
+        push(notification.route)
+        break;
+      }
+      case "Notifications": {
+        renderNotification(notification.content)
+        push(notification.route, notification.route_data)
+        break;
+      }
+      case "Show Toast": {
+        renderNotification(notification.content)
+        toast(notification.content.body)
+        break;
+      }
+      case "default": {
+          
+        push(notification.route)
+        break;
+      }
+
+  }
+
+
+
+
+  ------------------------------------------------------------------------------------------------------
+ Have not really done anything here yet, just kinda thinking about it.
+
+  Not sure what the goal for this function is suppose to be:  handles your newly designed notification structure for frontend navigation.
+  - if I am expected to parse the JSON notification here?
+  - if I need to manage the pages, go back to home, then route to a collection, then to a thread, then to etc... 
+        but if the views shown on screen are based on a push, pop (onBack) then this doesn't seem like the case
+  - I may need a little more clarity on what the notification/message types are intended to be
+  
+  My current assumptions: 
+
+       - the notifications are what you would see from like a twitter app when someone likes/retweets a post.
+
+       - the notification object is a model of a JSON notification that's alrady been parsed.
+
+
+        - push(location, locationInfo) 
+            -> locationInfo  was left vague and I don't know it's intention. 
+                I'm going by an assumption that 'locationinfo' is not a necessary parameter
+                like push(location, locationInfo?) for default scenarios where the owner has not
+                updated application but would still want a standard route to the view without more features.
+
+        - goBack() 
+            -> I'm not sure why I would need access to this, if the purpose of
+    
+
