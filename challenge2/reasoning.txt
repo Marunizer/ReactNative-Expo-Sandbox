@@ -20,7 +20,7 @@ type: to identify notifcation time of where to navigate
 id: id for notification message.
 
 
-content : holds the fields we care about for actually rendering the notification.
+content[] : holds the fields we care about for actually rendering the notification.
 
 
 title: the simple main label for the notification. Could be an action, an account username, or 
@@ -31,8 +31,9 @@ title: the simple main label for the notification. Could be an action, an accoun
              simpler: "New Subscriber", "{username}" in this case, the username is enough, and the action text could be in the body
 
 
-body[]: usually a sneak peak at the content written, or an action performed if the title is simple. 
+body: usually a sneak peak at the content written, or an action performed if the title is simple. 
         on a comment , it will show the text from the comment.
+        - also can stuff text for a showToast here
 
 
 icon: could be either a string identifying if you want to display an icon representing a new message/comment/etc..
@@ -44,13 +45,14 @@ sound: a little extra, if we want different sounds for different notifications t
        could get the updated notification sound without updating the app.
 
 
-route: where to navigate the apps View or Screen to.
+route: where to navigate the apps View or Screen to. This really will jsut be the entity id of the account it belongs to.
 
 route_data: for cases such as sharing a specific card in a thread
             if users can have up to 36 cards or more on a thread, 
             sharing a specific card may defz be wanted so user is 
             not expected to swipe through them all
-            - also a generic string so could provide a different feature depending on screen routing to
+            
+            -will control the thread / collection / note wanted to navigate to by storing an id of the Object.
 
 
 createdAt: stole this from the example given, generally a good idea to keep track of metadata like this, but also important information
@@ -69,4 +71,5 @@ causer[]: from the "Things to consider" section. I did not include information f
                                             route: string,
                                             profileImageUrl: string(url),
                                         }
+
 
