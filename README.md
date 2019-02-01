@@ -25,7 +25,7 @@ Sat 1/26 - Setup project + typescript
 
 Sun 1/27 - Setup feed w/scrolling + refresh
 
-Mon 1/28 - ask me about a <span> error
+Mon 1/28 - ask me about a `<span>` error
 
 Tue 1/29 - introduced pop ups onClick icon picture
          - created repository
