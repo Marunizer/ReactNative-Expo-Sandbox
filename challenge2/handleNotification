@@ -1,71 +1,154 @@
- const handleNotification = (notification: Notification) => {
+  const handleNotification = (notification: Notification) => {
 
-    switch (notification.type) {
+        if (notification.type === 'Show Toast') {
+            toast(notification.body);
+            //we're done, leave method
+            return;
+        }
 
-      case "Account": {
-          renderNotification(notification.content)
-          push(notification.route)
-          break;
-      }
-      case "Thread": {
-        renderNotification(notification.content)
-        push(notification.route, notification.route_data)
-        break;
-      }
-      case "Collection": {
-        renderNotification(notification.content)
-        push(notification.route)
-        break;
-      }
-      case "Notes": {
-        renderNotification(notification.content)
-        push(notification.route)
-        break;
-      }
-      case "Notifications": {
-        renderNotification(notification.content)
-        push(notification.route, notification.route_data)
-        break;
-      }
-      case "Show Toast": {
-        renderNotification(notification.content)
-        toast(notification.content.body)
-        break;
-      }
-      case "default": {
-          
-        push(notification.route)
-        break;
-      }
+        let currentLocation = getCurrentScreenLocation();
+        let onClickNotification;
 
+        //since there's a screen for notifications(assuming it lists them), might as well update content for that screen
+        addNotificationForNotificationScreen(notfication); 
+
+        switch (notification.type) {
+
+            case "Account": {
+
+                onClickNotification = () => {
+                    push(notification.route);
+                }
+                break;
+            }
+            case "Thread": {
+                onClickNotification = () => {
+                    // Thread is not from user, must be rotued elsewhere, Go there directly!
+                    if(notification.route != currentAccount.id) {
+                        // (to account, to thread)
+                        push(notification.route, notification.route_data); 
+                    }
+                    else {
+                        //we're at home screen, Lets take our place to the account with out entity id of our own, and have the data take us to threads
+                        if (currentLocation == 'Home') { push(notification.route, notification.route_data) }
+
+                        while (currentLocation != 'Account' || currentLocation !=  "Thread") {
+                            goback();
+
+                            currentLocation = getCurrentScreenLocation();
+                            //go to Account from home
+                            if (currentLocation == 'Home') { push(notification.route); }
+                        }
+
+                        // route here is unecessary if already on Account screen
+                        push(notification.route, notification.route_data);
+                    }
+                }
+                break;
+            }
+            case "Collection": {
+                onClickNotification = () => {
+                    if(notification.route != currentAccount.id) {
+                        push(notification.route, notification.route_data);
+                    }
+                    else {
+                        if (currentLocation == 'Home') { push(notification.route, notification.route_data); }
+
+                        while (currentLocation != 'Account' || currentLocation !=  "Collection") {
+                            goback();
+
+                            currentLocation = getCurrentScreenLocation();
+                            if (currentLocation == 'Home') { push(notification.route); }
+                        }
+                        push(notification.route, notification.route_data);
+                    }
+                }
+                break;
+            }
+            case "Notes": {
+                onClickNotification = () => {
+
+                    if (currentLocation == 'Home') { 
+                        push(notification.route, notification.route_data);
+                    }
+
+                    while (currentLocation != 'Account' || currentLocation !=  "Notes") {
+                        goback();
+
+                        currentLocation = getCurrentScreenLocation();
+                        if (currentLocation == 'Home') { push(notification.route); }
+                    }
+                    push(notification.route, notification.route_data);
+                }
+
+                break;
+            }
+            case "Notifications": {
+                onClickNotification = () => {
+
+                while (currentLocation != 'Home' || currentLocation !=  "Notifications") {
+                    goback();
+                    currentLocation = getCurrentScreenLocation();
+                }
+                push(notification.route);
+            }
+
+                break;
+            }
+            case "default": { 
+                
+                onClickNotification = () => {
+                // take in entity, will atleast direct to Account page that holds the content for notification
+                push(notification.route);
+            }
+                break;
+            }
+        }
+
+        // pass in content to display notification + the expected function to navigate screens
+        renderNotification( notification.content.title, 
+        notification.content.body,
+        notification.content.icon,
+        notification.content.sound,
+        notification.content.created, // expected to just display how long ago notificaction was made
+        onClickNotification);
   }
 
 
 
 
   ------------------------------------------------------------------------------------------------------
- Have not really done anything here yet, just kinda thinking about it.
-
-  Not sure what the goal for this function is suppose to be:  handles your newly designed notification structure for frontend navigation.
-  - if I am expected to parse the JSON notification here?
-  - if I need to manage the pages, go back to home, then route to a collection, then to a thread, then to etc... 
-        but if the views shown on screen are based on a push, pop (onBack) then this doesn't seem like the case
-  - I may need a little more clarity on what the notification/message types are intended to be
-  
-  My current assumptions: 
-
-       - the notifications are what you would see from like a twitter app when someone likes/retweets a post.
-
-       - the notification object is a model of a JSON notification that's alrady been parsed.
+My model of navigation:
+                                                  ---> Threads
+                                                  |
+        Notifications <---  Home(Feed) ---> Account---> Collections
+                                 |                |
+                                 |                ---> Notes
+                                 V
+               {Account/thread/collection on the net, all seeing cloud}
 
 
-        - push(location, locationInfo) 
-            -> locationInfo  was left vague and I don't know it's intention. 
-                I'm going by an assumption that 'locationinfo' is not a necessary parameter
-                like push(location, locationInfo?) for default scenarios where the owner has not
-                updated application but would still want a standard route to the view without more features.
 
-        - goBack() 
-            -> I'm not sure why I would need access to this, if the purpose of
-    
+possible reasons to receive notification:
 
+    Account:
+    - "user" shared "Account" with you  
+
+    Thread | Collection:
+    - "user" liked/commented/shared your thread/Collection -> go to your own thread/Collection
+    - "user" shared/posted a new thread/collection, check it out !
+    - Thread/Collection liked by someone you're subscribed to is gaining traction, check it out !
+
+    Notes:
+    - "user" left a note -> check it
+
+    Notifications:
+    - You have X number notifications, see whats up !
+
+Thoughts:
+
+    assuming currentAccount : id is the entity id
+
+    can probably put threads/collection into same case statement
+
+    I kept everything split into cases to have an easier time thinking about their scenarios
