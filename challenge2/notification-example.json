@@ -1,14 +1,15 @@
-{"notification": {
+{
+    "notification": {
     "type": "Account | Thread | Collection | Notes | Notifications | Show Thread",
     "id": "erwgbei499hfh43fp92hf",
     "content": {
-      "title": "{Username from causer} | ",
-      "body": "good old message",
+      "title": "{Username from causer} | Action ",
+      "body": "good old sneak peek text",
       "icon": "url./",
-      "sound": "ding, swoosh, click-clack"
+      "sound": "ding, swoosh, click-clack | url"
     },
-    "route": "/route/data | entity id",
-    "route_data": "card 35",
+    "route": "entity id",
+    "route_data": "thread id |collection id | Note id",
     "created": "2019-01-08T01:01:18.733Z"
   }
 }
